@@ -17,9 +17,20 @@ HyprLogi 0.3.0 or newer.
 
 ## Install
 
-First install HyprLogi from its [latest release](https://github.com/mfabijanic/hyprlogi/releases/latest) (the
-release notes list the Arch package and other options) and start its service. Then add the widget, together with
-HyprLogi's Omarchy menu and hooks:
+**1. Install HyprLogi** (skip if `hyprlogi --version` already prints 0.3.0 or newer). On Arch / Omarchy, build it
+from the [latest release](https://github.com/mfabijanic/hyprlogi/releases/latest) and start its service:
+
+```sh
+mkdir -p ~/.cache/hyprlogi-pkg && cd ~/.cache/hyprlogi-pkg
+curl -LO https://github.com/mfabijanic/hyprlogi/releases/latest/download/PKGBUILD
+curl -LO https://github.com/mfabijanic/hyprlogi/releases/latest/download/hyprlogi.install
+makepkg -si
+systemctl --user enable --now hyprlogi.service
+```
+
+Other distributions: see the release notes. Check that it finds your mouse with `hyprlogi devices`.
+
+**2. Add the widget**, together with HyprLogi's Omarchy menu and hooks:
 
 ```sh
 hyprlogi omarchy install --plugin
@@ -41,7 +52,7 @@ omarchy plugin remove mfabijanic.hyprlogi
 ```
 
 This removes only the widget. HyprLogi itself, its menu entries and hooks stay: `hyprlogi omarchy uninstall`
-removes the menu entries and hooks, and the [HyprLogi README](https://github.com/mfabijanic/hyprlogi#installation)
+removes the menu entries and hooks, and the [HyprLogi README](https://github.com/mfabijanic/hyprlogi#remove)
 covers removing HyprLogi.
 
 ## Requirements
