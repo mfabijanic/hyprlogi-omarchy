@@ -32,17 +32,22 @@ Its only setting, the refresh interval (default 10 s), is under Setup > Plugins.
 
 ## Development
 
-Symlink the checkout into the shell's plugin directory; saving a file reloads it:
+The shell watches `~/.config/omarchy/plugins/` with `inotifywait -r`, which does not follow symlinks, so work in a
+checkout inside that directory (it is what `omarchy plugin add` creates anyway):
 
 ```sh
-ln -s "$PWD" ~/.config/omarchy/plugins/mfabijanic.hyprlogi
+git clone git@github.com:mfabijanic/hyprlogi-omarchy.git ~/.config/omarchy/plugins/mfabijanic.hyprlogi
 omarchy-shell shell rescanPlugins
 omarchy plugin enable mfabijanic.hyprlogi
 ```
 
+Saving a file there reloads the widget. If a change does not show up (the panel can keep an old instance), run
+`omarchy restart shell`.
+
 - `omarchy plugin validate .` checks the manifest.
 - `node --test tests/` tests the pure logic in `Model.js`.
 - `qs log -p /usr/share/omarchy/shell -t 200` shows the shell log (QML errors).
+- `qs -p /usr/share/omarchy/shell ipc call mfabijanic.hyprlogi open` opens the panel.
 
 ## License
 

@@ -57,9 +57,9 @@ function profileLabel(name) {
   }).join(" ")
 }
 
-// "Logitech MX Master 4 (/dev/hidraw1)" -> "Logitech MX Master 4"
+// "Logitech MX Master 4 (/dev/hidraw1)" -> "MX Master 4": the panel subtitle is short
 function deviceName(device) {
-  return String(device || "").replace(/\s*\([^)]*\)\s*$/, "")
+  return String(device || "").replace(/\s*\([^)]*\)\s*$/, "").replace(/^Logitech\s+/i, "")
 }
 
 function barGlyph(status) {

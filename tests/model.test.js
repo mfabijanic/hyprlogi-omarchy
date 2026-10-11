@@ -16,7 +16,7 @@ test("parses a running daemon", () => {
   assert.deepEqual(s.profiles, ["default", "omarchy", "my_profile"])
   assert.equal(Model.barState(s), "ok")
   assert.equal(Model.barGlyph(s), Model.GLYPH_MOUSE)
-  assert.equal(Model.heroMeta(s), "Logitech MX Master 4 · Omarchy")
+  assert.equal(Model.heroMeta(s), "MX Master 4 · Omarchy")
   assert.equal(Model.tooltip(s), "Haptics: Omarchy")
 })
 
@@ -46,4 +46,5 @@ test("labels", () => {
   assert.equal(Model.profileLabel("my_profile"), "My Profile")
   assert.equal(Model.profileLabel("omarchy"), "Omarchy")
   assert.equal(Model.deviceName("MX Master 4 (/dev/hidraw1)"), "MX Master 4")
+  assert.equal(Model.deviceName("Logitech MX Master 4 (/dev/hidraw1)"), "MX Master 4")
 })
