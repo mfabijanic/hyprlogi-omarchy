@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "mfabijanic.hyprlogi",
+  "name": "HyprLogi",
+  "version": "0.1.0",
+  "author": "Matej Fabijanić",
+  "license": "GPL-3.0-or-later",
+  "description": "Haptic feedback on Logitech mice: pause, switch profiles and test effects from the Omarchy bar.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Panel.qml"
+  },
+  "barWidget": {
+    "displayName": "Haptics",
+    "description": "HyprLogi haptic feedback: pause, switch profiles and test effects.",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "refreshIntervalSec": 10
+    },
+    "schema": [
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 2,
+        "max": 600,
+        "step": 1,
+        "defaultValue": 10
+      }
+    ]
+  }
+}
