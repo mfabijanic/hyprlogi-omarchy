@@ -7,6 +7,7 @@ var GLYPH_ALERT = "󰀦"
 var GLYPH_CHECK = "󰄬"
 var GLYPH_PLAY = "󰐊"
 var GLYPH_RESTART = "󰑓"
+var GLYPH_EDIT = "󰏫"
 
 // Exit code of `sh -c 'command -v hyprlogi || exit 127; …'` when hyprlogi is missing
 var EXIT_NOT_INSTALLED = 127
@@ -21,7 +22,8 @@ function defaultStatus() {
     profiles: [],
     backend: "",
     device: "",
-    version: ""
+    version: "",
+    gui: false
   }
 }
 
@@ -43,6 +45,8 @@ function parseStatus(raw, exitCode) {
     status.backend = String(parsed.backend || "")
     status.device = String(parsed.device || "")
     status.version = String(parsed.version || "")
+    // HyprLogi 0.4.1+ reports whether its profile editor can start
+    status.gui = parsed.gui === true
   } catch (e) {
     status.ok = false
     status.error = "Could not read HyprLogi status"
@@ -93,6 +97,7 @@ if (typeof module !== "undefined") {
     GLYPH_MOUSE: GLYPH_MOUSE,
     GLYPH_MOUSE_OFF: GLYPH_MOUSE_OFF,
     GLYPH_ALERT: GLYPH_ALERT,
+    GLYPH_EDIT: GLYPH_EDIT,
     EXIT_NOT_INSTALLED: EXIT_NOT_INSTALLED,
     defaultStatus: defaultStatus,
     parseStatus: parseStatus,

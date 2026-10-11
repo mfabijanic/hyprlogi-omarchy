@@ -14,12 +14,15 @@ Panel {
   moduleName: "mfabijanic.hyprlogi"
   ipcTarget: "mfabijanic.hyprlogi"
 
-  // Keyboard cursor over one flat list: the switch, each profile, then the actions.
+  // Keyboard cursor over one flat list: the switch, each profile, the profile editor (when
+  // HyprLogi can start it), then the actions.
   property int cursorIndex: 0
   property bool cursorActive: false
   readonly property var profiles: haptics.status.profiles
   readonly property int profileBase: 1
-  readonly property int actionBase: profileBase + profiles.length
+  readonly property bool editorShown: haptics.status.installed && haptics.status.gui
+  readonly property int editorIndex: profileBase + profiles.length
+  readonly property int actionBase: editorIndex + (editorShown ? 1 : 0)
   readonly property var actions: [
     { glyph: Model.GLYPH_PLAY, label: "Test effects", detail: "Play effects 1, 4 and 8" },
     { glyph: Model.GLYPH_RESTART, label: "Restart service", detail: "systemctl --user restart hyprlogi" }
@@ -47,8 +50,14 @@ Panel {
 
   function activateCursor() {
     if (cursorIndex === 0) haptics.togglePaused()
-    else if (cursorIndex < actionBase) haptics.setProfile(profiles[cursorIndex - profileBase])
+    else if (cursorIndex < editorIndex) haptics.setProfile(profiles[cursorIndex - profileBase])
+    else if (editorShown && cursorIndex === editorIndex) openEditor("")
     else activateAction(cursorIndex - actionBase)
+  }
+
+  function openEditor(profile) {
+    haptics.openEditor(profile)
+    root.close()
   }
 
   function activateAction(index) {
@@ -104,6 +113,7 @@ Panel {
       onTextKey: function(t) {
         if (t === "p" || t === "P") haptics.togglePaused()
         else if (t === "t" || t === "T") haptics.testEffects()
+        else if ((t === "e" || t === "E") && root.editorShown) root.openEditor("")
         else if (t === "r" || t === "R") haptics.refresh()
       }
 
@@ -208,8 +218,21 @@ Panel {
                 glyph: modelData === haptics.status.profile ? Model.GLYPH_CHECK : ""
                 label: Model.profileLabel(modelData)
                 current: modelData === haptics.status.profile
+                trailingGlyph: root.editorShown ? Model.GLYPH_EDIT : ""
+                trailingTooltip: "Edit " + Model.profileLabel(modelData)
                 onActivated: haptics.setProfile(modelData)
+                onTrailingActivated: root.openEditor(modelData)
               }
+            }
+
+            ActionRow {
+              visible: root.editorShown
+              width: parent.width
+              cursorIndex: root.editorIndex
+              glyph: Model.GLYPH_EDIT
+              label: "Profile editor…"
+              detail: "Edit events, effects and profiles (E)"
+              onActivated: root.openEditor("")
             }
           }
 
@@ -249,7 +272,11 @@ Panel {
     property string glyph: ""
     property string label: ""
     property string detail: ""
+    // Optional small button at the end of the row, e.g. "edit this profile"
+    property string trailingGlyph: ""
+    property string trailingTooltip: ""
     signal activated()
+    signal trailingActivated()
 
     hasCursor: root.cursorActive && root.cursorIndex === cursorIndex
     foreground: root.foreground
@@ -308,6 +335,17 @@ Panel {
           font.pixelSize: Style.font.caption
           elide: Text.ElideRight
         }
+      }
+
+      PanelActionButton {
+        visible: row.trailingGlyph !== ""
+        iconText: row.trailingGlyph
+        tooltipText: row.trailingTooltip
+        foreground: root.foreground
+        fontFamily: root.fontFamily
+        enabled: !haptics.busy
+        Layout.alignment: Qt.AlignVCenter
+        onClicked: row.trailingActivated()
       }
     }
   }

@@ -14,6 +14,8 @@ test("parses a running daemon", () => {
   assert.equal(s.ok, true)
   assert.equal(s.running, true)
   assert.deepEqual(s.profiles, ["default", "omarchy", "my_profile"])
+  assert.equal(s.gui, false)
+  assert.equal(Model.parseStatus(RUNNING.replace('"version"', '"gui":true,"version"'), 0).gui, true)
   assert.equal(Model.barState(s), "ok")
   assert.equal(Model.barGlyph(s), Model.GLYPH_MOUSE)
   assert.equal(Model.heroMeta(s), "MX Master 4 · Omarchy")
