@@ -180,7 +180,7 @@ Panel {
             textFormat: Text.PlainText
             visible: !haptics.status.installed
             width: parent.width
-            text: "Install HyprLogi: yay -S hyprlogi (or see github.com/mfabijanic/hyprlogi)"
+            text: "Install HyprLogi 0.3.0 or newer from github.com/mfabijanic/hyprlogi/releases"
             color: root.dim
             font.family: root.fontFamily
             font.pixelSize: Style.font.bodySmall

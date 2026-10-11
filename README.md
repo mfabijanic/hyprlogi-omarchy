@@ -17,10 +17,12 @@ HyprLogi 0.3.0 or newer.
 
 ## Install
 
+First install HyprLogi from its [latest release](https://github.com/mfabijanic/hyprlogi/releases/latest) (the
+release notes list the Arch package and other options) and start its service. Then add the widget, together with
+HyprLogi's Omarchy menu and hooks:
+
 ```sh
-yay -S hyprlogi                                   # HyprLogi itself
-systemctl --user enable --now hyprlogi.service
-hyprlogi omarchy install --plugin                 # menu, hooks and this widget
+hyprlogi omarchy install --plugin
 ```
 
 or just the widget:
@@ -38,8 +40,9 @@ Its only setting, the refresh interval (default 10 s), is under Setup > Plugins.
 omarchy plugin remove mfabijanic.hyprlogi
 ```
 
-This removes only the widget. HyprLogi itself, its menu entries and hooks stay; remove those with
-`hyprlogi omarchy uninstall` and `sudo pacman -R hyprlogi`.
+This removes only the widget. HyprLogi itself, its menu entries and hooks stay: `hyprlogi omarchy uninstall`
+removes the menu entries and hooks, and the [HyprLogi README](https://github.com/mfabijanic/hyprlogi#installation)
+covers removing HyprLogi.
 
 ## Requirements
 
