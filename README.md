@@ -1,5 +1,7 @@
 # HyprLogi for Omarchy
 
+![HyprLogi bar widget: the Haptics panel with the pause switch, profiles and actions](preview.png)
+
 An [Omarchy](https://omarchy.org/) bar widget for [HyprLogi](https://github.com/mfabijanic/hyprlogi), the daemon
 that plays haptic feedback on Logitech mice (MX Master 4) for Hyprland events.
 
@@ -29,6 +31,24 @@ omarchy plugin add https://github.com/mfabijanic/hyprlogi-omarchy.git --enable
 
 The widget lands in the right section of the bar; move it with `omarchy bar move mfabijanic.hyprlogi --section left`.
 Its only setting, the refresh interval (default 10 s), is under Setup > Plugins.
+
+## Remove
+
+```sh
+omarchy plugin remove mfabijanic.hyprlogi
+```
+
+This removes only the widget. HyprLogi itself, its menu entries and hooks stay; remove those with
+`hyprlogi omarchy uninstall` and `sudo pacman -R hyprlogi`.
+
+## Requirements
+
+- [HyprLogi](https://github.com/mfabijanic/hyprlogi) 0.3.0 or newer, with its service running
+  (`systemctl --user enable --now hyprlogi.service`). Without it the icon shows a warning and the panel explains
+  how to install it.
+- A Logitech mouse with haptic feedback (tested with the MX Master 4), through OpenLogi's or HyprLogi's udev rule.
+
+The widget writes nothing to your configuration: it only runs `hyprlogi` and `systemctl --user restart hyprlogi`.
 
 ## Development
 

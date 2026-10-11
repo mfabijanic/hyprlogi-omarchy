@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "mfabijanic.hyprlogi",
   "name": "HyprLogi",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Matej Fabijanić",
   "license": "GPL-3.0-or-later",
   "description": "Haptic feedback on Logitech mice: pause, switch profiles and test effects from the Omarchy bar.",
