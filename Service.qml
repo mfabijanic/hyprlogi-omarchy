@@ -83,7 +83,7 @@ Item {
 
   // The profile editor is a separate app (HyprLogi 0.4.1+); started like Omarchy's own launchers.
   function openEditor(profile) {
-    if (!status.gui) return
+    if (!Model.editorAvailable(status)) return
     var command = ["uwsm-app", "--", "hyprlogi-gui"]
     if (profile) command = command.concat(["--profile", profile])
     Quickshell.execDetached(command)

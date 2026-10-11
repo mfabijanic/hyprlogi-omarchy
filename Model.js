@@ -54,6 +54,28 @@ function parseStatus(raw, exitCode) {
   return status
 }
 
+// The first HyprLogi whose profile editor bounds pasted text (see editorAvailable)
+var EDITOR_MIN_VERSION = "0.4.2"
+
+// "0.4.10" >= "0.4.2": compares numeric parts; a missing or odd version is never new enough
+function versionAtLeast(version, minimum) {
+  var a = String(version || "").split(".")
+  var b = String(minimum).split(".")
+  for (var i = 0; i < b.length; i++) {
+    var x = parseInt(a[i], 10)
+    var y = parseInt(b[i], 10)
+    if (!isFinite(x)) return false
+    if (x !== y) return x > y
+  }
+  return true
+}
+
+// The panel offers the profile editor only when HyprLogi says it can start, and only from the
+// version that caps clipboard pastes into its fields.
+function editorAvailable(status) {
+  return status.installed && status.gui === true && versionAtLeast(status.version, EDITOR_MIN_VERSION)
+}
+
 // "omarchy" -> "Omarchy", "my_profile" -> "My Profile"
 function profileLabel(name) {
   return String(name || "").split(/[-_ ]+/).filter(function(part) { return part }).map(function(part) {
@@ -99,6 +121,9 @@ if (typeof module !== "undefined") {
     GLYPH_ALERT: GLYPH_ALERT,
     GLYPH_EDIT: GLYPH_EDIT,
     EXIT_NOT_INSTALLED: EXIT_NOT_INSTALLED,
+    EDITOR_MIN_VERSION: EDITOR_MIN_VERSION,
+    versionAtLeast: versionAtLeast,
+    editorAvailable: editorAvailable,
     defaultStatus: defaultStatus,
     parseStatus: parseStatus,
     profileLabel: profileLabel,

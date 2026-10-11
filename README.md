@@ -10,13 +10,14 @@ that plays haptic feedback on Logitech mice (MX Master 4) for Hyprland events.
 - **Panel**: a switch to pause and resume haptics, the profile list (click to switch, the daemon picks it up at
   once), *Test effects* and *Restart service*.
 - **Profile editor**: *Profile editor…* under the profile list opens HyprLogi's editor on the active profile, and
-  the pencil next to a profile opens it on that profile. Both show only when HyprLogi 0.4.1+ reports that its
-  editor can start (GTK 4 and libadwaita installed); if the editor is already open, it is brought to the front.
+  the pencil next to a profile opens it on that profile. Both show only with HyprLogi 0.4.2 or newer (its editor
+  caps text pasted into its fields) when it reports that the editor can start (GTK 4 and libadwaita installed); if
+  the editor is already open, it is brought to the front.
 - **Mouse**: left click opens the panel, middle click pauses or resumes, right click refreshes.
 - **Keyboard** (panel open): arrows and Enter, `P` pause/resume, `E` profile editor, `T` test, `R` refresh.
 
 The widget only runs the `hyprlogi` command (`status --json`, `toggle`, `profile set`, `play`) and starts
-`hyprlogi-gui`; it needs HyprLogi 0.3.0 or newer (0.4.1 or newer for the profile editor).
+`hyprlogi-gui`; it needs HyprLogi 0.3.0 or newer (0.4.2 or newer for the profile editor).
 
 ## Install
 
@@ -60,7 +61,7 @@ covers removing HyprLogi.
 
 ## Requirements
 
-- [HyprLogi](https://github.com/mfabijanic/hyprlogi) 0.3.0 or newer (0.4.1+ for the profile editor), with its service running
+- [HyprLogi](https://github.com/mfabijanic/hyprlogi) 0.3.0 or newer (0.4.2+ for the profile editor), with its service running
   (`systemctl --user enable --now hyprlogi.service`). Without it the icon shows a warning and the panel explains
   how to install it.
 - A Logitech mouse with haptic feedback (tested with the MX Master 4), through OpenLogi's or HyprLogi's udev rule.

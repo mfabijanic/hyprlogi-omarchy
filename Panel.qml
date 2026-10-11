@@ -20,7 +20,7 @@ Panel {
   property bool cursorActive: false
   readonly property var profiles: haptics.status.profiles
   readonly property int profileBase: 1
-  readonly property bool editorShown: haptics.status.installed && haptics.status.gui
+  readonly property bool editorShown: Model.editorAvailable(haptics.status)
   readonly property int editorIndex: profileBase + profiles.length
   readonly property int actionBase: editorIndex + (editorShown ? 1 : 0)
   readonly property var actions: [

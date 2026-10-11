@@ -50,3 +50,16 @@ test("labels", () => {
   assert.equal(Model.deviceName("MX Master 4 (/dev/hidraw1)"), "MX Master 4")
   assert.equal(Model.deviceName("Logitech MX Master 4 (/dev/hidraw1)"), "MX Master 4")
 })
+
+test("profile editor only from HyprLogi 0.4.2", () => {
+  assert.equal(Model.versionAtLeast("0.4.2", "0.4.2"), true)
+  assert.equal(Model.versionAtLeast("0.4.10", "0.4.2"), true)
+  assert.equal(Model.versionAtLeast("1.0", "0.4.2"), true)
+  assert.equal(Model.versionAtLeast("0.4.1", "0.4.2"), false)
+  assert.equal(Model.versionAtLeast("", "0.4.2"), false)
+  const status = (version, gui) => Model.parseStatus(JSON.stringify({ running: true, version, gui }), 0)
+  assert.equal(Model.editorAvailable(status("0.4.2", true)), true)
+  assert.equal(Model.editorAvailable(status("0.4.1", true)), false)
+  assert.equal(Model.editorAvailable(status("0.4.2", false)), false)
+  assert.equal(Model.editorAvailable(Model.parseStatus("", Model.EXIT_NOT_INSTALLED)), false)
+})
